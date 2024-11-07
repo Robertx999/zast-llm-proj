@@ -27,7 +27,3 @@ gitignore
 # System Files
 .DS_Store
 Thumbs.db
-
-# Rendered Typst Files
-/src/assets/typst/documentation/main.pdf
-/src/assets/typst/documentation/main.svg
