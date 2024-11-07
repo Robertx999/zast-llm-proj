@@ -1,4 +1,3 @@
-import { A } from "@solidjs/router";
 import { House } from "lucide-solid";
 import Icon from "~/components/Icon";
 import { Button } from "~/components/ui/button";

@@ -1,4 +1,3 @@
-import { A } from "@solidjs/router";
 import { TextField, TextFieldRoot } from "~/components/ui/textfield";
 import { Button } from "~/components/ui/button";
 import { Search } from "lucide-solid";

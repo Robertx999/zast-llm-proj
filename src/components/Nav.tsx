@@ -10,7 +10,6 @@ import {
 import Login from "~/components/Login";
 import Icon from "~/components/Icon";
 import { Button } from "./ui/button";
-import { Show } from "solid-js";
 import { Moon, Sun } from "lucide-solid";
 import { useColorMode } from "@kobalte/core";
 

@@ -1,9 +1,9 @@
 import { A } from "@solidjs/router";
-import { Button, buttonVariants } from "~/components/ui/button";
-import Typst from "~/components/Typst";
+import { buttonVariants } from "~/components/ui/button";
 import Icon from "~/components/Icon";
 import { Download, ExternalLink } from "lucide-solid";
-// import svg from "src/assets/typst/documentation/main.svg";
+import docsSvg from "~/assets/typst/documentation/main.svg";
+import docsPdf from "~/assets/typst/documentation/main.pdf";
 
 export default function About() {
   return (
@@ -14,7 +14,7 @@ export default function About() {
           <div class="flex gap-2">
             <A
               class={buttonVariants({ variant: "outline" }) + " flex gap-2"}
-              href="/src/assets/typst/documentation/main.pdf"
+              href={docsPdf}
               target="_blank"
             >
               <Icon component={ExternalLink} />
@@ -22,7 +22,7 @@ export default function About() {
             </A>
             <A
               class={buttonVariants({ variant: "outline" }) + " flex gap-2"}
-              href="/src/assets/typst/documentation/main.pdf"
+              href={docsPdf}
               download="documentation.pdf"
             >
               <Icon component={Download} />
@@ -30,7 +30,10 @@ export default function About() {
             </A>
           </div>
         </div>
-        <Typst />
+        <img
+          class="shadow-md shadow-[hsl(var(--muted-foreground)/15%)] rounded-md border border-input"
+          src={docsSvg}
+        />
       </div>
     </main>
   );
