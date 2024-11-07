@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vinxi dev",
     "build": "vinxi build",
-    "start": "vinxi start"
+    "start": "vinxi start",
+    "typst": "bin/typst compile src/assets/typst/documentation/main.typ src/assets/typst/documentation/main.svg && bin/typst compile src/assets/typst/documentation/main.typ src/assets/typst/documentation/main.pdf"
   },
   "dependencies": {
     "@kobalte/core": "^0.13.7",
