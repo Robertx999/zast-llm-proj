@@ -1,6 +1,7 @@
+import { A } from "@solidjs/router";
 import { LogIn } from "lucide-solid";
 import Icon from "~/components/Icon";
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 
 export default function Nav() {
   // let user = {name:"robert"};
@@ -9,14 +10,10 @@ export default function Nav() {
     <div></div>
   ) : (
     <div>
-      <Button
-        class="flex gap-2"
-        variant="ghost"
-        on:click={() => console.log("test")}
-      >
-        <Icon component={LogIn} />
-        Log in
-      </Button>
+      <A href="/auth" class={buttonVariants({ variant: "ghost" })}>
+        <Icon class="mr-2" component={LogIn} />
+        Login
+      </A>
     </div>
   );
 }

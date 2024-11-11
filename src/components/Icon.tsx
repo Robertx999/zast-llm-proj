@@ -14,6 +14,7 @@ export default function Nav(props: {
   return (
     <Dynamic
       component={component()}
+      class={classList()}
       style={"width: " + width() + "; height: " + width() + ";"}
     />
   );

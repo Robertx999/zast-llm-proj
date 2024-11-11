@@ -4,7 +4,7 @@ import { Search } from "lucide-solid";
 
 export default function Home() {
   return (
-    <main class="w-full flex flex-nowrap flex-col items-center p-4">
+    <main class="w-full h-fit flex flex-nowrap flex-col items-center p-4">
       <div class="p-8 max-w-[80%]">
         <h1 class="text-5xl font-bold">
           Get similar music based on one song or playlist

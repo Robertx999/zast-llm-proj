@@ -81,24 +81,30 @@
     @apply border-border;
   }
   ::-webkit-scrollbar {
+    background: transparent;
     width: 0.9rem;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    margin: 2px;
     width: 0.5rem;
     border-radius: 9999px;
     border: 4px solid transparent;
     background-clip: content-box;
     background-color: hsl(var(--muted-foreground) / 20%);
   }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  #app {
+    @apply h-screen w-full flex flex-col;
+  }
   html {
-    scrollbar-gutter: stable;
+    @apply h-screen w-full;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground h-screen w-full;
     font-family: "Geist Sans", sans-serif;
   }
   input::placeholder {

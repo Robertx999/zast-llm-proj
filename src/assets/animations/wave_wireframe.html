@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>My first three.js app</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      div#canvas {
+        transition: opacity 1000ms ease-in-out;
+      }
+      html,
+      body,
+      div#canvas {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: linear-gradient(
+          168deg,
+          hsl(240 3.7% 15.9%),
+          hsl(240 10% 3.9%) 60%
+        );
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="canvas"></div>
+    <script type="module" lang="js">
+      import * as THREE from "three";
+      let planePosition = 0,
+        idleRotationPlanePosition = 0,
+        planeVelocity = 0;
+      let mousePositionX = 0.5,
+        deltaTime = 0.001;
+      const spring = (
+        position,
+        anchorPosition,
+        velocity,
+        deltaTime,
+        mass,
+        stiffness,
+        damping
+      ) => {
+        const newVelocity =
+          velocity +
+          ((stiffness * (anchorPosition - position) - damping * velocity) /
+            mass) *
+            deltaTime;
+        const newPosition = position + velocity * deltaTime;
+        return { newPosition, newVelocity };
+      };
+      document.onmousemove = (event) => {
+        mousePositionX = event.pageX / window.innerWidth;
+      };
+
+      // Rendering Context Setup
+      const scene = new THREE.Scene();
+      //   scene.background = new THREE.Color().setRGB(0.0, 0.0, 0.0);
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+
+      const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+      });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      const canvasDiv = document.getElementById("canvas");
+      canvasDiv.style.opacity = "0";
+
+      renderer.setSize(canvasDiv.clientWidth, canvasDiv.clientHeight);
+
+      window.onresize = () => {
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+        camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        camera.updateProjectionMatrix();
+        // camera.setViewOffset(canvas.clientWidth, canvas.clientHeight, camera.x, camera.y, )
+      };
+
+      canvasDiv.appendChild(renderer.domElement);
+      canvasDiv.style.opacity = "1";
+
+      // Scene Setup
+
+      const geometry = new THREE.PlaneGeometry(5.0, 5.0, 20.0, 20.0);
+      const material = new THREE.ShaderMaterial({
+        wireframe: true,
+        transparent: true,
+        uniforms: {
+          uTime: {
+            value: 0,
+          },
+        },
+        vertexShader: `uniform float uTime;\n
+      varying vec3 wavePos;\n
+      varying vec3 vNormal;\n
+      void main() {\n
+      	const float frequency = 6.0;\n
+      	const float amplitude = 0.15;\n
+      	wavePos = vec3(position.x, position.y,sin(sqrt(pow(position.x,2.0)+pow(position.y,2.0))*frequency-uTime)*amplitude);\n
+      	vec4 mvPosition = modelViewMatrix * vec4( wavePos, 1.0 );\n
+      	gl_Position = projectionMatrix * mvPosition;\n
+          vNormal = normal;\n
+      }\n`,
+        fragmentShader: `varying vec3 wavePos;\n
+      varying vec3 vNormal;\n
+      void main() {\n
+      	vec3 color = vec3((wavePos.z*3.0+0.5));\n
+      	gl_FragColor = vec4( 0.9803921569, 0.9803921569, 0.9803921569, (wavePos.z*2.5+0.25)*smoothstep(0.0,1.0,(1.0-length(wavePos.xy))*0.2+0.3) );\n
+      }\n`,
+      });
+      const plane = new THREE.Mesh(geometry, material);
+      scene.add(plane);
+
+      camera.position.y = -2.0;
+      camera.position.z = 1.2;
+      camera.rotation.x = 45;
+
+      const clock = new THREE.Clock(true);
+
+      //Update Loop
+      renderer.setAnimationLoop((time) => {
+        // plane.rotation.x += 0.01;
+        // camera.rotation.x += 0.01;
+        deltaTime = clock.getDelta();
+        plane.material.uniforms.uTime.value += 3 * deltaTime;
+        // plane.rotation.z += 0.001;
+        const { newPosition, newVelocity } = spring(
+          planePosition,
+          mousePositionX * 3,
+          planeVelocity,
+          deltaTime,
+          3.0,
+          2.0,
+          4.0
+        );
+        planePosition = newPosition;
+        idleRotationPlanePosition += 0.1 * deltaTime;
+        plane.rotation.z = planePosition + idleRotationPlanePosition;
+        planeVelocity = newVelocity;
+        renderer.render(scene, camera);
+      });
+    </script>
+  </body>
+</html>

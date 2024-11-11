@@ -21,7 +21,7 @@ export default function Nav() {
       : "border-transparent hover:border-sky-600";
   const { toggleColorMode, colorMode } = useColorMode();
   return (
-    <div class="flex flex-nowrap flex-row justify-between items-center p-4 w-full">
+    <div class="flex flex-nowrap flex-row justify-between items-center p-4 w-full h-fit">
       <NavigationMenu>
         <NavigationMenuTrigger as="a" href="/">
           Home
@@ -35,7 +35,7 @@ export default function Nav() {
       </NavigationMenu>
       <div class="flex flex-nowrap flex-row items-center gap-2">
         <Login />
-        <div class="w-[1px] h-full bg-border overflow-hidden">&nbsp</div>
+        <hr class="w-[1px] h-full bg-border"></hr>
         <Button
           on:click={toggleColorMode}
           variant="ghost"
