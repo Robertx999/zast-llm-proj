@@ -20,7 +20,7 @@ export default function Auth() {
           class="font-semibold text-[hsl(0_0%_98%)] text-xl flex gap-2 items-center p-10 absolute"
         >
           <Icon width="1.75rem" component={AudioWaveform} />
-          brain waves
+          musica ai
         </A>
         <SpatialWave />
       </div>

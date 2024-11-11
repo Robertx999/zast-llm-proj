@@ -9,23 +9,21 @@ import { ColorModeScript, ColorModeProvider } from "@kobalte/core";
 export default function App() {
   return (
     <Router
-      root={(props) => {
-        return (
-          <>
-            <MetaProvider>
-              <Suspense>
-                <ColorModeScript />
-                <ColorModeProvider>
-                  <Show when={props.location.pathname != "/auth"}>
-                    <Nav />
-                  </Show>
-                  {props.children}
-                </ColorModeProvider>
-              </Suspense>
-            </MetaProvider>
-          </>
-        );
-      }}
+      root={(props) => (
+        <>
+          <MetaProvider>
+            <Suspense>
+              <ColorModeScript />
+              <ColorModeProvider>
+                <Show when={props.location.pathname != "/auth"}>
+                  <Nav />
+                </Show>
+                {props.children}
+              </ColorModeProvider>
+            </Suspense>
+          </MetaProvider>
+        </>
+      )}
     >
       <FileRoutes />
     </Router>
